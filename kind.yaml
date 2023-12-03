@@ -1,0 +1,29 @@
+# kind.yaml
+# This configuration defines a KIND cluster.
+
+# Specify the kind of the resource. Here, it's a Kubernetes cluster.
+kind: Cluster
+
+# Define the version of the KIND API to use.
+apiVersion: kind.x-k8s.io/v1alpha4
+
+# Define the nodes that will be part of the cluster.
+nodes:
+# Here, we are defining a single node with the role of "control-plane", which means it's a master node.
+- role: control-plane
+
+  # kubeadmConfigPatches allows patching of kubeadm configuration using strategic merge patches.
+  kubeadmConfigPatches:
+  # Below is a patch for kubeadm's InitConfiguration.
+  - |
+    kind: InitConfiguration
+
+    # This section is about the registration of the node with the cluster.
+    nodeRegistration:
+      # kubeletExtraArgs allows you to pass additional arguments to the kubelet.
+      # Here, we are adding a label "ingress-ready=true" to the node.
+      # This label can be used to determine nodes suitable for running ingress controllers or similar workloads.
+      kubeletExtraArgs:
+        node-labels: "ingress-ready=true"
+- role: worker
+

@@ -1,0 +1,31 @@
+# permissions for end users to edit pets.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/name: clusterrole
+    app.kubernetes.io/instance: pet-editor-role
+    app.kubernetes.io/component: rbac
+    app.kubernetes.io/created-by: petstore-operator
+    app.kubernetes.io/part-of: petstore-operator
+    app.kubernetes.io/managed-by: kustomize
+  name: pet-editor-role
+rules:
+- apiGroups:
+  - petstore.example.com
+  resources:
+  - pets
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - petstore.example.com
+  resources:
+  - pets/status
+  verbs:
+  - get
